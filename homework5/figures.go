@@ -1,14 +1,14 @@
 package main
 
 import (
-	"fmt"
+	"errors"
 	"math"
 )
 
 //Figure describes 2 methods - area and perimeter of figure
 type Figure interface {
-	area() float64
-	perimeter() float64
+	Area() (float64, error)
+	Perimeter() (float64, error)
 }
 
 //Square describes a square
@@ -21,49 +21,36 @@ type Circle struct {
 	radius float64
 }
 
+var ErrInputSmall = errors.New("bad input. too small")
+
 //area returns the area of a square
-func (s Square) area() float64 {
-	return s.side * s.side
+func (s Square) Area() (float64, error) {
+	if s.side <= 0 {
+		return 0, ErrInputSmall
+	}
+	return s.side * s.side, nil
 }
 
 //perimeter returns the perimeter of a square
-func (s Square) perimeter() float64 {
-	return s.side * 4
+func (s Square) Perimeter() (float64, error) {
+	if s.side <= 0 {
+		return 0, ErrInputSmall
+	}
+	return s.side * 4, nil
 }
 
 //area returns the area of a circle
-func (c Circle) area() float64 {
-	return math.Pi * c.radius * c.radius
+func (c Circle) Area() (float64, error) {
+	if c.radius <= 0 {
+		return 0, ErrInputSmall
+	}
+	return math.Pi * c.radius * c.radius, nil
 }
 
 //perimeter returns the perimeter of a circle
-func (c Circle) perimeter() float64 {
-	return 2 * math.Pi * c.radius
-}
-
-func main() {
-	var s Figure = Square{5}
-	var c Figure = Circle{5}
-
-	//Case #1. Expected result: area=25, perimeter=20
-	if s.area() != 25 {
-		fmt.Println("Area of square is incorrect")
-	} else if s.perimeter() != 20 {
-		fmt.Println("Perimeter of square is incorrect")
-	} else {
-		fmt.Println("The square is calculated correctly")
+func (c Circle) Perimeter() (float64, error) {
+	if c.radius <= 0 {
+		return 0, ErrInputSmall
 	}
-
-	//Case #2. Expected result: area=Pi*25, perimeter=Pi*10
-	if c.area() != math.Pi*25 {
-		fmt.Println("Area of circle is incorrect")
-	} else if c.perimeter() != math.Pi*10 {
-		fmt.Println("Perimeter of circle is incorrect")
-	} else {
-		fmt.Println("The circle is calculated correctly")
-	}
-
-	fmt.Println(s.area(), s.perimeter())
-	fmt.Println(c.area(), c.perimeter())
-
+	return 2 * math.Pi * c.radius, nil
 }
