@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"log"
 	"sort"
 	"time"
 )
@@ -41,8 +41,7 @@ func (p People) Swap(i, j int) {
 func StrToDate(date string) time.Time {
 	res, err := time.Parse("2006-01-02", date)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
 	return res
 }
@@ -56,6 +55,6 @@ func main() {
 
 	sort.Sort(p)
 	for i:=range(p){
-		fmt.Println(p[i].firstName,p[i].lastName, p[i].birthDay.Year(),p[i].birthDay.Month(),p[i].birthDay.Day())
+		fmt.Printf("%s %s born at %v %s %v \n", p[i].firstName,p[i].lastName, p[i].birthDay.Year(),p[i].birthDay.Month(),p[i].birthDay.Day())
 	}
 }
