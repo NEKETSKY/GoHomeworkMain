@@ -1,5 +1,3 @@
-## Configure this and understand how to work with it damn hard on windows.
-## I must have done it wrong
 all: build test cover run
 build: 
         $(GOBUILD) -o $(BINARY_NAME) -v
@@ -14,3 +12,5 @@ clean:
 run:
         $(GOBUILD) -o $(BINARY_NAME) -v ./...
         ./$(BINARY_NAME)
+lint:
+        golangci-lint run
