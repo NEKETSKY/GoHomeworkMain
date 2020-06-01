@@ -9,7 +9,6 @@ var sl []string
 var wg sync.WaitGroup
 
 func addLine(words string) {
-	//wg.Add(1)
 	sl = append(sl, words)
 	wg.Done()
 }
